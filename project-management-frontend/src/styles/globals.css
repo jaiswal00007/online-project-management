@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 40% 98%;        /* #F8FAFC — near-white slate */
+    --foreground: 215 28% 17%;        /* #1E293B — slate-800 */
+    --card: 0 0% 100%;
+    --card-foreground: 215 28% 17%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 28% 17%;
+    --primary: 221.2 83.2% 53.3%;     /* blue-500 */
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 215 28% 17%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 43 96% 56%;             /* amber-400 */
+    --accent-foreground: 215 28% 17%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214 32% 91%;            /* slate-200 */
+    --input: 214 32% 91%;
+    --ring: 221.2 83.2% 53.3%;
+    --radius: 0.625rem;               /* 10px — slightly more rounded */
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 47% 8%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 47% 8%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 43 96% 56%;
+    --accent-foreground: 215 28% 17%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  .glass-effect {
+    @apply backdrop-blur-md bg-white/70 dark:bg-gray-900/70;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent;
+  }
+
+  .card-hover {
+    @apply transition-all duration-200 hover:shadow-md hover:-translate-y-0.5;
+  }
+
+  .btn-primary {
+    @apply px-4 py-2 bg-primary-600 text-white rounded-lg font-medium
+           hover:bg-primary-700 transition-colors duration-150 disabled:opacity-50
+           disabled:cursor-not-allowed focus:outline-none focus:ring-2
+           focus:ring-primary-500 focus:ring-offset-2;
+  }
+
+  .btn-secondary {
+    @apply px-4 py-2 bg-slate-100 text-slate-700 rounded-lg font-medium
+           hover:bg-slate-200 transition-colors duration-150 dark:bg-gray-800
+           dark:text-gray-300 dark:hover:bg-gray-700 focus:outline-none
+           focus:ring-2 focus:ring-gray-500 focus:ring-offset-2;
+  }
+
+  .input-field {
+    @apply w-full px-3 py-2 border border-slate-300 rounded-lg
+           focus:outline-none focus:ring-2 focus:ring-primary-500
+           focus:border-transparent dark:bg-gray-800 dark:border-gray-700
+           dark:text-white transition-colors duration-150;
+  }
+
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium whitespace-nowrap;
+  }
+
+  .status-dot {
+    @apply inline-block w-2 h-2 rounded-full flex-shrink-0;
+  }
+}
