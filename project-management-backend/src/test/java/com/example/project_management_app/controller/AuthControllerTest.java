@@ -45,23 +45,23 @@ class AuthControllerTest {
         objectMapper = new ObjectMapper();
 
         validUserDto = new UserDto();
-        validUserDto.setUsername("Mahmoud");
+        validUserDto.setUsername("Anshu");
         validUserDto.setEmail("mn.de@outlook.com");
         validUserDto.setPassword("Password123!");
-        validUserDto.setFirstName("Mahmoud");
-        validUserDto.setLastName("Najmeh");
+        validUserDto.setFirstName("Anshu");
+        validUserDto.setLastName("Jaiswal");
         validUserDto.setRole(User.Role.ROLE_USER);
 
         validLoginRequest = new LoginRequest();
-        validLoginRequest.setUsername("Mahmoud");
+        validLoginRequest.setUsername("Anshu");
         validLoginRequest.setPassword("Password123!");
 
         testUser = new User();
         testUser.setId(1L);
-        testUser.setUsername("Mahmoud");
+        testUser.setUsername("Anshu");
         testUser.setEmail("mn.de@outlook.com");
-        testUser.setFirstName("Mahmoud");
-        testUser.setLastName("Najmeh");
+        testUser.setFirstName("Anshu");
+        testUser.setLastName("Jaiswal");
         testUser.setRole(User.Role.ROLE_USER);
     }
 
@@ -80,7 +80,7 @@ class AuthControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(validUserDto)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.username").value("Mahmoud"))
+                .andExpect(jsonPath("$.username").value("Anshu"))
                 .andExpect(jsonPath("$.email").value("mn.de@outlook.com"));
 
         verify(accountService, times(1)).registerUser(any(UserDto.class));
@@ -137,7 +137,7 @@ class AuthControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(validUserDto)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.username").value("Mahmoud"));
+                .andExpect(jsonPath("$.username").value("Anshu"));
 
         verify(emailService, times(1)).validateInvitationToken(validToken);
         verify(emailService, times(1)).getEmailFromToken(validToken);
@@ -188,7 +188,7 @@ class AuthControllerTest {
                         .content(objectMapper.writeValueAsString(validLoginRequest)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.token").value(expectedToken))
-                .andExpect(jsonPath("$.username").value("Mahmoud"))
+                .andExpect(jsonPath("$.username").value("Anshu"))
                 .andExpect(jsonPath("$.message").value("Login successful"));
 
         verify(accountService, times(1)).loginUser(any(LoginRequest.class));

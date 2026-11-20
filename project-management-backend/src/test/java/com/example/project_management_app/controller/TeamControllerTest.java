@@ -50,9 +50,9 @@ class TeamControllerTest {
 
         user1 = new User();
         user1.setId(1L);
-        user1.setUsername("Mahmoud");
-        user1.setFirstName("Mahmoud");
-        user1.setLastName("Najmeh");
+        user1.setUsername("Anshu");
+        user1.setFirstName("Anshu");
+        user1.setLastName("Jaiswal");
 
         user2 = new User();
         user2.setId(2L);
@@ -258,7 +258,7 @@ class TeamControllerTest {
         mockMvc.perform(get("/api/teams/{teamId}/members", teamId))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(1))
-                .andExpect(jsonPath("$[0].username").value("Mahmoud"))
+                .andExpect(jsonPath("$[0].username").value("Anshu"))
                 .andExpect(jsonPath("$[1].id").value(2))
                 .andExpect(jsonPath("$[1].username").value("Katya"));
 

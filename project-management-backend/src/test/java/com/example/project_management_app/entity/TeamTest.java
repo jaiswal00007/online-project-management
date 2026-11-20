@@ -16,7 +16,7 @@ class TeamTest {
     void createTeam_Works() {
         User user = new User();
         user.setId(1L);
-        user.setUsername("Mahmoud");
+        user.setUsername("Anshu");
 
         Team team = new Team(
                 "Development Team",

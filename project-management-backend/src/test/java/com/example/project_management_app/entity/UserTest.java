@@ -16,20 +16,20 @@ class UserTest {
     @Test
     void createUser_Works() {
         User user = new User(
-                "Mahmoud",
+                "Anshu",
                 "mn.de@outlook.com",
                 "password123",
-                "Mahmoud",
-                "Najmeh",
+                "Anshu",
+                "Jaiswal",
                 User.Role.ROLE_USER
         );
 
         assertNotNull(user);
-        assertEquals("Mahmoud", user.getUsername());
+        assertEquals("Anshu", user.getUsername());
         assertEquals("mn.de@outlook.com", user.getEmail());
         assertEquals("password123", user.getPassword());
-        assertEquals("Mahmoud", user.getFirstName());
-        assertEquals("Najmeh", user.getLastName());
+        assertEquals("Anshu", user.getFirstName());
+        assertEquals("Jaiswal", user.getLastName());
         assertEquals(User.Role.ROLE_USER, user.getRole());
         assertNotNull(user.getLastActivity());
     }
@@ -39,11 +39,11 @@ class UserTest {
         User user = new User();
 
         user.setId(1L);
-        user.setUsername("Mahmoud");
+        user.setUsername("Anshu");
         user.setEmail("mn.de@outlook.com");
         user.setPassword("pass123");
-        user.setFirstName("Mahmoud");
-        user.setLastName("Najmeh");
+        user.setFirstName("Anshu");
+        user.setLastName("Jaiswal");
         user.setRole(User.Role.ROLE_ADMIN);
 
         LocalDateTime now = LocalDateTime.now();
@@ -61,11 +61,11 @@ class UserTest {
         user.setProviderId("12345");
 
         assertEquals(1L, user.getId());
-        assertEquals("Mahmoud", user.getUsername());
+        assertEquals("Anshu", user.getUsername());
         assertEquals("mn.de@outlook.com", user.getEmail());
         assertEquals("pass123", user.getPassword());
-        assertEquals("Mahmoud", user.getFirstName());
-        assertEquals("Najmeh", user.getLastName());
+        assertEquals("Anshu", user.getFirstName());
+        assertEquals("Jaiswal", user.getLastName());
         assertEquals(User.Role.ROLE_ADMIN, user.getRole());
         assertEquals(now, user.getLastActivity());
         assertEquals(now, user.getCreatedAt());
@@ -195,11 +195,11 @@ class UserTest {
     void fromDatabaseData_Works() {
         User user = new User();
         user.setId(1L);
-        user.setUsername("Mahmoud");
+        user.setUsername("Anshu");
         user.setEmail("mn.de@outlook.com");
         user.setPassword("$2a$10$GMSdL3Sq7mLftnaa1gsS9.a.H4g1q4mwo/NIR8jOsYowiI5XYUon2");
-        user.setFirstName("Mahmoud");
-        user.setLastName("Najmeh");
+        user.setFirstName("Anshu");
+        user.setLastName("Jaiswal");
         user.setRole(User.Role.ROLE_USER);
         user.setProfilePictureFileName("user_1_130ef6cc-9ad1-4845-aa11-af8376ce67e6.jpg");
         user.setProfilePictureUrl("/api/users/profile-picture/user_1_130ef6cc-9ad1-4845-aa11-af8376ce67e6.jpg");
@@ -210,10 +210,10 @@ class UserTest {
         user.setProviderId("");
 
         assertEquals(1L, user.getId());
-        assertEquals("Mahmoud", user.getUsername());
+        assertEquals("Anshu", user.getUsername());
         assertEquals("mn.de@outlook.com", user.getEmail());
-        assertEquals("Mahmoud", user.getFirstName());
-        assertEquals("Najmeh", user.getLastName());
+        assertEquals("Anshu", user.getFirstName());
+        assertEquals("Jaiswal", user.getLastName());
         assertEquals(User.Role.ROLE_USER, user.getRole());
         assertEquals("user_1_130ef6cc-9ad1-4845-aa11-af8376ce67e6.jpg", user.getProfilePictureFileName());
     }
@@ -223,7 +223,7 @@ class UserTest {
         User user = new User();
         user.setId(2L);
         user.setUsername("Katya");
-        user.setEmail("mamocool3@gmail.com");
+        user.setEmail("anshujaiswal342@gmail.com");
         user.setPassword("$2a$10$7sVZHwcbWKglvTCCCFfzcOLbM5Y1ihnTy7TQNSGe1gle6Epxv35ZC");
         user.setFirstName("Katya");
         user.setLastName("Otto");
@@ -238,7 +238,7 @@ class UserTest {
 
         assertEquals(2L, user.getId());
         assertEquals("Katya", user.getUsername());
-        assertEquals("mamocool3@gmail.com", user.getEmail());
+        assertEquals("anshujaiswal342@gmail.com", user.getEmail());
         assertEquals("Katya", user.getFirstName());
         assertEquals("Otto", user.getLastName());
         assertEquals(User.Role.ROLE_USER, user.getRole());

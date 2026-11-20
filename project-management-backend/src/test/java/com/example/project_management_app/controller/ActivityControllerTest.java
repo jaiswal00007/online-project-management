@@ -74,10 +74,10 @@ class ActivityControllerTest {
 
         currentUser = new User();
         currentUser.setId(1L);
-        currentUser.setUsername("Mahmoud");
+        currentUser.setUsername("Anshu");
         currentUser.setEmail("mn.de@outlook.com");
-        currentUser.setFirstName("Mahmoud");
-        currentUser.setLastName("Najmeh");
+        currentUser.setFirstName("Anshu");
+        currentUser.setLastName("Jaiswal");
 
         senderUser = new User();
         senderUser.setId(2L);

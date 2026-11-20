@@ -84,16 +84,16 @@ class TaskServiceImplTest {
     void setUp() {
         currentUser = new User();
         currentUser.setId(1L);
-        currentUser.setUsername("Mahmoud");
-        currentUser.setFirstName("Mahmoud");
-        currentUser.setLastName("Najmeh");
+        currentUser.setUsername("Anshu");
+        currentUser.setFirstName("Anshu");
+        currentUser.setLastName("Jaiswal");
         currentUser.setEmail("mn.de@outlook.com");
 
         assignedUser = new User();
         assignedUser.setId(1L);
-        assignedUser.setUsername("Mahmoud");
-        assignedUser.setFirstName("Mahmoud");
-        assignedUser.setLastName("Najmeh");
+        assignedUser.setUsername("Anshu");
+        assignedUser.setFirstName("Anshu");
+        assignedUser.setLastName("Jaiswal");
 
         anotherUser = new User();
         anotherUser.setId(2L);
@@ -184,7 +184,7 @@ class TaskServiceImplTest {
         verify(userRepository, times(1)).save(assignedUser);
         verify(taskRepository, times(1)).save(any(Task.class));
         verify(userService, times(1)).getUsersInSameTeam(currentUser);
-        verify(notificationService, times(1)).createNotificationForUsers(eq(teamMembers), eq("Mahmoud created task: New Task in project: MN ChatBot"), eq("TASK_CREATED"), eq(2L), eq("TASK"), eq(1L), eq("Mahmoud Najmeh"));
+        verify(notificationService, times(1)).createNotificationForUsers(eq(teamMembers), eq("Anshu created task: New Task in project: MN ChatBot"), eq("TASK_CREATED"), eq(2L), eq("TASK"), eq(1L), eq("Anshu Jaiswal"));
     }
 
     @Test
@@ -221,7 +221,7 @@ class TaskServiceImplTest {
         verify(projectRepository, times(1)).findById(2L);
         verify(userRepository, times(1)).findById(1L);
         verify(taskRepository, times(1)).save(any(Task.class));
-        verify(notificationService, times(1)).createNotificationForUsers(eq(teamMembers), eq("Mahmoud created task: Minimal Task in project: MN ChatBot"), eq("TASK_CREATED"), eq(7L), eq("TASK"), eq(1L), eq("Mahmoud Najmeh"));
+        verify(notificationService, times(1)).createNotificationForUsers(eq(teamMembers), eq("Anshu created task: Minimal Task in project: MN ChatBot"), eq("TASK_CREATED"), eq(7L), eq("TASK"), eq(1L), eq("Anshu Jaiswal"));
     }
 
     @Test
@@ -298,15 +298,15 @@ class TaskServiceImplTest {
         verify(taskRepository, times(1)).findById(2L);
         verify(accountService, times(1)).getCurrentUser();
         verify(taskRepository, times(1)).save(any(Task.class));
-        verify(notificationService, times(1)).createNotificationForUsers(eq(teamMembers), eq("Mahmoud updated task: Updated Task Title in project: MN ChatBot"), eq("TASK_UPDATED"), eq(2L), eq("TASK"), eq(1L), eq("Mahmoud Najmeh"));
+        verify(notificationService, times(1)).createNotificationForUsers(eq(teamMembers), eq("Anshu updated task: Updated Task Title in project: MN ChatBot"), eq("TASK_UPDATED"), eq(2L), eq("TASK"), eq(1L), eq("Anshu Jaiswal"));
     }
 
     @Test
     void updateTaskSuccessAsProjectCreator() {
         User projectCreator = new User();
         projectCreator.setId(1L);
-        projectCreator.setFirstName("Mahmoud");
-        projectCreator.setLastName("Najmeh");
+        projectCreator.setFirstName("Anshu");
+        projectCreator.setLastName("Jaiswal");
 
         TaskDto updateDto = new TaskDto();
         updateDto.setTitle("Updated Task Title");
@@ -326,7 +326,7 @@ class TaskServiceImplTest {
         verify(taskRepository, times(1)).findById(2L);
         verify(accountService, times(1)).getCurrentUser();
         verify(taskRepository, times(1)).save(any(Task.class));
-        verify(notificationService, times(1)).createNotificationForUsers(eq(teamMembers), eq("Mahmoud updated task: Updated Task Title in project: MN ChatBot"), eq("TASK_UPDATED"), eq(2L), eq("TASK"), eq(1L), eq("Mahmoud Najmeh"));
+        verify(notificationService, times(1)).createNotificationForUsers(eq(teamMembers), eq("Anshu updated task: Updated Task Title in project: MN ChatBot"), eq("TASK_UPDATED"), eq(2L), eq("TASK"), eq(1L), eq("Anshu Jaiswal"));
     }
 
     @Test
@@ -383,7 +383,7 @@ class TaskServiceImplTest {
         assertNotNull(updatedTask);
         assertEquals(4L, updatedTask.getId());
 
-        verify(notificationService, times(1)).createNotificationForUsers(eq(teamMembers), eq("Mahmoud completed task: Task to Complete in project: MN ChatBot"), eq("TASK_COMPLETED"), eq(4L), eq("TASK"), eq(1L), eq("Mahmoud Najmeh"));
+        verify(notificationService, times(1)).createNotificationForUsers(eq(teamMembers), eq("Anshu completed task: Task to Complete in project: MN ChatBot"), eq("TASK_COMPLETED"), eq(4L), eq("TASK"), eq(1L), eq("Anshu Jaiswal"));
     }
 
     @Test
@@ -411,7 +411,7 @@ class TaskServiceImplTest {
         assertEquals(2L, updatedTask.getId());
 
         verify(userRepository, times(1)).findById(4L);
-        verify(notificationService, times(1)).createNotificationForUsers(eq(teamMembers), eq("Mahmoud reassigned task: Planning for MN ChatBot in project: MN ChatBot"), eq("TASK_REASSIGNED"), eq(2L), eq("TASK"), eq(1L), eq("Mahmoud Najmeh"));
+        verify(notificationService, times(1)).createNotificationForUsers(eq(teamMembers), eq("Anshu reassigned task: Planning for MN ChatBot in project: MN ChatBot"), eq("TASK_REASSIGNED"), eq(2L), eq("TASK"), eq(1L), eq("Anshu Jaiswal"));
     }
 
     @Test
@@ -432,7 +432,7 @@ class TaskServiceImplTest {
         assertEquals(2L, updatedTask.getId());
 
         verify(taskRepository, times(1)).save(any(Task.class));
-        verify(notificationService, times(1)).createNotificationForUsers(eq(teamMembers), eq("Mahmoud updated task: Updated Title Only in project: MN ChatBot"), eq("TASK_UPDATED"), eq(2L), eq("TASK"), eq(1L), eq("Mahmoud Najmeh"));
+        verify(notificationService, times(1)).createNotificationForUsers(eq(teamMembers), eq("Anshu updated task: Updated Title Only in project: MN ChatBot"), eq("TASK_UPDATED"), eq(2L), eq("TASK"), eq(1L), eq("Anshu Jaiswal"));
     }
 
     @Test
@@ -522,7 +522,7 @@ class TaskServiceImplTest {
         verify(accountService, times(1)).getCurrentUser();
         verify(userRepository, times(1)).save(assignedUser);
         verify(userService, times(1)).getUsersInSameTeam(assignedUser);
-        verify(notificationService, times(1)).createNotificationForUsers(eq(teamMembers), eq("Mahmoud deleted task: Planning for MN ChatBot from project: MN ChatBot"), eq("TASK_DELETED"), eq(2L), eq("TASK"), eq(1L), eq("Mahmoud Najmeh"));
+        verify(notificationService, times(1)).createNotificationForUsers(eq(teamMembers), eq("Anshu deleted task: Planning for MN ChatBot from project: MN ChatBot"), eq("TASK_DELETED"), eq(2L), eq("TASK"), eq(1L), eq("Anshu Jaiswal"));
         verify(taskRepository, times(1)).deleteById(2L);
     }
 
@@ -530,8 +530,8 @@ class TaskServiceImplTest {
     void deleteTaskSuccessAsProjectCreator() {
         User projectCreator = new User();
         projectCreator.setId(1L);
-        projectCreator.setFirstName("Mahmoud");
-        projectCreator.setLastName("Najmeh");
+        projectCreator.setFirstName("Anshu");
+        projectCreator.setLastName("Jaiswal");
 
         when(taskRepository.findById(2L)).thenReturn(Optional.of(task1));
         when(accountService.getCurrentUser()).thenReturn(projectCreator);
@@ -544,7 +544,7 @@ class TaskServiceImplTest {
 
         verify(taskRepository, times(1)).findById(2L);
         verify(accountService, times(1)).getCurrentUser();
-        verify(notificationService, times(1)).createNotificationForUsers(eq(teamMembers), eq("Mahmoud deleted task: Planning for MN ChatBot from project: MN ChatBot"), eq("TASK_DELETED"), eq(2L), eq("TASK"), eq(1L), eq("Mahmoud Najmeh"));
+        verify(notificationService, times(1)).createNotificationForUsers(eq(teamMembers), eq("Anshu deleted task: Planning for MN ChatBot from project: MN ChatBot"), eq("TASK_DELETED"), eq(2L), eq("TASK"), eq(1L), eq("Anshu Jaiswal"));
         verify(taskRepository, times(1)).deleteById(2L);
     }
 

@@ -48,9 +48,9 @@ class TeamServiceImplTest {
     void setUp() {
         me = new User();
         me.setId(1L);
-        me.setUsername("Mahmoud");
-        me.setFirstName("Mahmoud");
-        me.setLastName("Najmeh");
+        me.setUsername("Anshu");
+        me.setFirstName("Anshu");
+        me.setLastName("Jaiswal");
         me.setRole(User.Role.ROLE_USER);
 
         admin = new User();

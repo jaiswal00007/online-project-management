@@ -35,7 +35,7 @@ class AuthenticationServiceTest {
     private AuthenticationService authenticationService;
 
     private User user;
-    private final String username = "Mahmoud";
+    private final String username = "Anshu";
     private final String password = "password123";
     private final String encodedPassword = "$2a$10$GMSdL3Sq7mLftnaa1gsS9.a.H4g1q4mwo/NIR8jOsYowiI5XYUon2";
     private final String token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNYWhtb3VkIiwiaWF0IjoxNzQwMzUyMDAwLCJleHAiOjE3NDA0Mzg0MDB9.token";
@@ -47,8 +47,8 @@ class AuthenticationServiceTest {
         user.setUsername(username);
         user.setPassword(encodedPassword);
         user.setEmail("mn.de@outlook.com");
-        user.setFirstName("Mahmoud");
-        user.setLastName("Najmeh");
+        user.setFirstName("Anshu");
+        user.setLastName("Jaiswal");
         user.setRole(User.Role.ROLE_USER);
     }
 
@@ -146,7 +146,7 @@ class AuthenticationServiceTest {
 
     @Test
     void authenticateWithDifferentUsernameCase() {
-        String usernameWithDifferentCase = "mahmoud";
+        String usernameWithDifferentCase = "anshu";
 
         when(userRepository.findByUsername(usernameWithDifferentCase)).thenReturn(Optional.empty());
 

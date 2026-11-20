@@ -55,9 +55,9 @@ class ProjectServiceImplTest {
     void setUp() {
         currentUser = new User();
         currentUser.setId(1L);
-        currentUser.setUsername("Mahmoud");
-        currentUser.setFirstName("Mahmoud");
-        currentUser.setLastName("Najmeh");
+        currentUser.setUsername("Anshu");
+        currentUser.setFirstName("Anshu");
+        currentUser.setLastName("Jaiswal");
         currentUser.setEmail("mn.de@outlook.com");
         currentUser.setRole(User.Role.ROLE_USER);
 
@@ -66,7 +66,7 @@ class ProjectServiceImplTest {
         anotherUser.setUsername("Katya");
         anotherUser.setFirstName("Katya");
         anotherUser.setLastName("Otto");
-        anotherUser.setEmail("mamocool3@gmail.com");
+        anotherUser.setEmail("anshujaiswal342@gmail.com");
         anotherUser.setRole(User.Role.ROLE_USER);
 
         team = new Team();

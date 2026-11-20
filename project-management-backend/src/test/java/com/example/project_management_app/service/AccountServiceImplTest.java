@@ -58,7 +58,7 @@ class AccountServiceImplTest {
     private LoginRequest loginRequest;
     private PasswordChangeRequest passwordChangeRequest;
     private MultipartFile profilePicture;
-    private final String username = "Mahmoud";
+    private final String username = "Anshu";
     private final String password = "password123";
     private final String encodedPassword = "$2a$10$GMSdL3Sq7mLftnaa1gsS9.a.H4g1q4mwo/NIR8jOsYowiI5XYUon2";
     private final String newPassword = "NewPassword123!";
@@ -71,8 +71,8 @@ class AccountServiceImplTest {
         user.setUsername(username);
         user.setPassword(encodedPassword);
         user.setEmail("mn.de@outlook.com");
-        user.setFirstName("Mahmoud");
-        user.setLastName("Najmeh");
+        user.setFirstName("Anshu");
+        user.setLastName("Jaiswal");
         user.setRole(User.Role.ROLE_USER);
         user.setLastActivity(LocalDateTime.now());
 
@@ -268,7 +268,7 @@ class AccountServiceImplTest {
 
         assertNotNull(updatedUser);
         assertEquals("Updated Only", updatedUser.getFirstName());
-        assertEquals("Najmeh", updatedUser.getLastName());
+        assertEquals("Jaiswal", updatedUser.getLastName());
         assertEquals("mn.de@outlook.com", updatedUser.getEmail());
 
         verify(userRepository, times(1)).findByUsername(username);

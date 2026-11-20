@@ -36,7 +36,7 @@ class ActivityEventProducerTest {
 
         testEvent = UserActivityEvent.builder()
                 .userId(1L)
-                .username("Mahmoud")
+                .username("Anshu")
                 .action("TASK_CREATED")
                 .entityType("TASK")
                 .entityId(100L)

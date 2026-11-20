@@ -53,11 +53,11 @@ class ProjectControllerTest {
 
         currentUser = new User();
         currentUser.setId(2L);
-        currentUser.setUsername("Mahmoud");
+        currentUser.setUsername("Anshu");
 
         User creator = new User();
         creator.setId(2L);
-        creator.setUsername("Mahmoud");
+        creator.setUsername("Anshu");
 
         project = new Project();
         project.setId(1L);

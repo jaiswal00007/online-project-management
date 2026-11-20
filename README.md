@@ -5,8 +5,7 @@
 Built with **Spring Boot 3.2.0** and **React 18 + TypeScript**
 
 ## Author
-**Mahmoud Najmeh**  
-<img src="https://avatars.githubusercontent.com/u/78208459?u=c3f9c7d6b49fc9726c5ea8bce260656bcb9654b3&v=4" width="200px" style="border-radius: 50%;">
+**Anshu Jaiswal & Bhvya Soni**  
 
 ------------------------------------------------------------------------
 
@@ -278,7 +277,7 @@ project-management-app/
 ## 1. Clone & Setup Backend
 
 ```bash
-git clone https://github.com/mahmoudnajmeh/project-management-app.git
+git clone https://github.com/anshujaiswal342/project-management-app.git
 cd project-management-app
 
 mysql -u root -p
@@ -368,19 +367,7 @@ When adding your images to the documentation, use these exact filenames:
 
 ---
 
-# 🤝 Contributing
 
-1. Fork the repository
-2. Create feature branch (`git checkout -b feature/amazing`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push branch (`git push origin feature/amazing`)
-5. Open Pull Request
-
----
-
-# 📄 License
-
-This project is licensed under the [MIT License](./LICENSE).
 
 ---
 

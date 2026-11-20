@@ -48,17 +48,17 @@ class UserServiceTest {
     void setUp() {
         currentUser = new User();
         currentUser.setId(1L);
-        currentUser.setUsername("Mahmoud");
-        currentUser.setFirstName("Mahmoud");
-        currentUser.setLastName("Najmeh");
+        currentUser.setUsername("Anshu");
+        currentUser.setFirstName("Anshu");
+        currentUser.setLastName("Jaiswal");
         currentUser.setEmail("mn.de@outlook.com");
         currentUser.setRole(User.Role.ROLE_USER);
 
         user1 = new User();
         user1.setId(1L);
-        user1.setUsername("Mahmoud");
-        user1.setFirstName("Mahmoud");
-        user1.setLastName("Najmeh");
+        user1.setUsername("Anshu");
+        user1.setFirstName("Anshu");
+        user1.setLastName("Jaiswal");
         user1.setEmail("mn.de@outlook.com");
 
         user2 = new User();
@@ -66,7 +66,7 @@ class UserServiceTest {
         user2.setUsername("Katya");
         user2.setFirstName("Katya");
         user2.setLastName("Otto");
-        user2.setEmail("mamocool3@gmail.com");
+        user2.setEmail("anshujaiswal342@gmail.com");
 
         user3 = new User();
         user3.setId(3L);

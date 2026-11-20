@@ -70,10 +70,10 @@ class UserControllerTest {
 
         currentUser = new User();
         currentUser.setId(1L);
-        currentUser.setUsername("Mahmoud");
+        currentUser.setUsername("Anshu");
         currentUser.setEmail("mn.de@outlook.com");
-        currentUser.setFirstName("Mahmoud");
-        currentUser.setLastName("Najmeh");
+        currentUser.setFirstName("Anshu");
+        currentUser.setLastName("Jaiswal");
         currentUser.setRole(User.Role.ROLE_USER);
         currentUser.setProfilePictureFileName("user_1_130ef6cc-9ad1-4845-aa11-af8376ce67e6.jpg");
         currentUser.setProfilePictureContentType("image/jpeg");
@@ -88,10 +88,10 @@ class UserControllerTest {
         adminUser.setRole(User.Role.ROLE_ADMIN);
 
         userDto = new UserDto();
-        userDto.setUsername("MahmoudUpdated");
+        userDto.setUsername("AnshuUpdated");
         userDto.setEmail("mn.updated@outlook.com");
-        userDto.setFirstName("Mahmoud");
-        userDto.setLastName("NajmehUpdated");
+        userDto.setFirstName("Anshu");
+        userDto.setLastName("JaiswalUpdated");
         userDto.setPassword("NewPassword123!");
 
         passwordChangeRequest = new PasswordChangeRequest();
@@ -113,10 +113,10 @@ class UserControllerTest {
         mockMvc.perform(get("/api/users/me"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.username").value("Mahmoud"))
+                .andExpect(jsonPath("$.username").value("Anshu"))
                 .andExpect(jsonPath("$.email").value("mn.de@outlook.com"))
-                .andExpect(jsonPath("$.firstName").value("Mahmoud"))
-                .andExpect(jsonPath("$.lastName").value("Najmeh"))
+                .andExpect(jsonPath("$.firstName").value("Anshu"))
+                .andExpect(jsonPath("$.lastName").value("Jaiswal"))
                 .andExpect(jsonPath("$.role").value("ROLE_USER"));
 
         verify(accountService, times(1)).getCurrentUser();
@@ -134,10 +134,10 @@ class UserControllerTest {
     void updateCurrentUserSuccess() throws Exception {
         User updatedUser = new User();
         updatedUser.setId(1L);
-        updatedUser.setUsername("MahmoudUpdated");
+        updatedUser.setUsername("AnshuUpdated");
         updatedUser.setEmail("mn.updated@outlook.com");
-        updatedUser.setFirstName("Mahmoud");
-        updatedUser.setLastName("NajmehUpdated");
+        updatedUser.setFirstName("Anshu");
+        updatedUser.setLastName("JaiswalUpdated");
 
         when(accountService.updateUser(any(UserDto.class))).thenReturn(updatedUser);
 
@@ -146,9 +146,9 @@ class UserControllerTest {
                         .content(objectMapper.writeValueAsString(userDto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.username").value("MahmoudUpdated"))
+                .andExpect(jsonPath("$.username").value("AnshuUpdated"))
                 .andExpect(jsonPath("$.email").value("mn.updated@outlook.com"))
-                .andExpect(jsonPath("$.lastName").value("NajmehUpdated"));
+                .andExpect(jsonPath("$.lastName").value("JaiswalUpdated"));
 
         verify(accountService, times(1)).updateUser(any(UserDto.class));
     }
@@ -381,7 +381,7 @@ class UserControllerTest {
         mockMvc.perform(get("/api/users"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(1))
-                .andExpect(jsonPath("$[0].username").value("Mahmoud"))
+                .andExpect(jsonPath("$[0].username").value("Anshu"))
                 .andExpect(jsonPath("$[1].id").value(2))
                 .andExpect(jsonPath("$[1].username").value("admin"));
 

@@ -39,7 +39,7 @@ class ActivityEventConsumerTest {
 
         taskCreatedEvent = UserActivityEvent.builder()
                 .userId(1L)
-                .username("Mahmoud")
+                .username("Anshu")
                 .action("TASK_CREATED")
                 .entityType("TASK")
                 .entityId(100L)
@@ -53,7 +53,7 @@ class ActivityEventConsumerTest {
 
         taskCompletedEvent = UserActivityEvent.builder()
                 .userId(1L)
-                .username("Mahmoud")
+                .username("Anshu")
                 .action("TASK_COMPLETED")
                 .entityType("TASK")
                 .entityId(100L)
@@ -63,7 +63,7 @@ class ActivityEventConsumerTest {
 
         userLoginEvent = UserActivityEvent.builder()
                 .userId(1L)
-                .username("Mahmoud")
+                .username("Anshu")
                 .action("USER_LOGIN")
                 .entityType("USER")
                 .entityId(1L)
@@ -73,7 +73,7 @@ class ActivityEventConsumerTest {
 
         unknownEvent = UserActivityEvent.builder()
                 .userId(1L)
-                .username("Mahmoud")
+                .username("Anshu")
                 .action("UNKNOWN_ACTION")
                 .entityType("UNKNOWN")
                 .entityId(999L)

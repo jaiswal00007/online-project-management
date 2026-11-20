@@ -25,7 +25,7 @@ class TaskTest {
 
         User user = new User();
         user.setId(1L);
-        user.setUsername("Mahmoud");
+        user.setUsername("Anshu");
 
         Task task = new Task(
                 "Planning",
@@ -148,9 +148,9 @@ class TaskTest {
     void getAssignedUserJson_ReturnsJsonWhenUserExists() {
         User user = new User();
         user.setId(1L);
-        user.setUsername("Mahmoud");
-        user.setFirstName("Mahmoud");
-        user.setLastName("Najmeh");
+        user.setUsername("Anshu");
+        user.setFirstName("Anshu");
+        user.setLastName("Jaiswal");
         user.setEmail("mn.de@outlook.com");
         user.setProfilePictureFileName("pic.jpg");
         user.setProfilePictureUrl("/url/pic.jpg");
@@ -164,9 +164,9 @@ class TaskTest {
 
         assertNotNull(userJson);
         assertEquals(1L, userJson.getId());
-        assertEquals("Mahmoud", userJson.getUsername());
-        assertEquals("Mahmoud", userJson.getFirstName());
-        assertEquals("Najmeh", userJson.getLastName());
+        assertEquals("Anshu", userJson.getUsername());
+        assertEquals("Anshu", userJson.getFirstName());
+        assertEquals("Jaiswal", userJson.getLastName());
         assertEquals("mn.de@outlook.com", userJson.getEmail());
         assertEquals("pic.jpg", userJson.getProfilePictureFileName());
         assertEquals("/url/pic.jpg", userJson.getProfilePictureUrl());
@@ -375,9 +375,9 @@ class TaskTest {
     void userJson_CreatesCorrectly() {
         Task.UserJson userJson = new Task.UserJson(
                 1L,
-                "Mahmoud",
-                "Mahmoud",
-                "Najmeh",
+                "Anshu",
+                "Anshu",
+                "Jaiswal",
                 "mn.de@outlook.com",
                 "pic.jpg",
                 "/url/pic.jpg",
@@ -386,9 +386,9 @@ class TaskTest {
         );
 
         assertEquals(1L, userJson.getId());
-        assertEquals("Mahmoud", userJson.getUsername());
-        assertEquals("Mahmoud", userJson.getFirstName());
-        assertEquals("Najmeh", userJson.getLastName());
+        assertEquals("Anshu", userJson.getUsername());
+        assertEquals("Anshu", userJson.getFirstName());
+        assertEquals("Jaiswal", userJson.getLastName());
         assertEquals("mn.de@outlook.com", userJson.getEmail());
         assertEquals("pic.jpg", userJson.getProfilePictureFileName());
         assertEquals("/url/pic.jpg", userJson.getProfilePictureUrl());

@@ -66,9 +66,9 @@ class SearchControllerTest {
 
         currentUser = new User();
         currentUser.setId(1L);
-        currentUser.setUsername("Mahmoud");
-        currentUser.setFirstName("Mahmoud");
-        currentUser.setLastName("Najmeh");
+        currentUser.setUsername("Anshu");
+        currentUser.setFirstName("Anshu");
+        currentUser.setLastName("Jaiswal");
 
         otherUser = new User();
         otherUser.setId(2L);
@@ -221,13 +221,13 @@ class SearchControllerTest {
     @Test
     void testSearchExcludesCurrentUser() throws Exception {
         when(accountService.getCurrentUser()).thenReturn(currentUser);
-        when(projectRepository.findByNameContainingIgnoreCase("mahmoud")).thenReturn(Collections.emptyList());
-        when(taskRepository.findByTitleContainingIgnoreCase("mahmoud")).thenReturn(Collections.emptyList());
-        when(teamRepository.findByNameContainingIgnoreCase("mahmoud")).thenReturn(Collections.emptyList());
-        when(userRepository.findByUsernameContainingIgnoreCase("mahmoud")).thenReturn(Arrays.asList(currentUser, otherUser));
+        when(projectRepository.findByNameContainingIgnoreCase("anshu")).thenReturn(Collections.emptyList());
+        when(taskRepository.findByTitleContainingIgnoreCase("anshu")).thenReturn(Collections.emptyList());
+        when(teamRepository.findByNameContainingIgnoreCase("anshu")).thenReturn(Collections.emptyList());
+        when(userRepository.findByUsernameContainingIgnoreCase("anshu")).thenReturn(Arrays.asList(currentUser, otherUser));
 
         mockMvc.perform(get("/api/search")
-                        .param("q", "mahmoud")
+                        .param("q", "anshu")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(1))

@@ -15,7 +15,7 @@ class JwtUtilTest {
 
     private final String secret = "4x9FhT2qL8mN5rP1sK3vY7wZ6bD0cG2jH5nB8vC1xM4qW7tR9yU2iO5pA8sD3fG6jH9";
     private final Long expiration = 86400000L;
-    private final String username = "Mahmoud";
+    private final String username = "Anshu";
 
     @BeforeEach
     void setUp() {

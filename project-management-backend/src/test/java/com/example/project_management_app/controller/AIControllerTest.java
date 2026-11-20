@@ -53,10 +53,10 @@ class AIControllerTest {
 
         testUser = new User();
         testUser.setId(1L);
-        testUser.setUsername("Mahmoud");
+        testUser.setUsername("Anshu");
         testUser.setEmail("mn.de@outlook.com");
-        testUser.setFirstName("Mahmoud");
-        testUser.setLastName("Najmeh");
+        testUser.setFirstName("Anshu");
+        testUser.setLastName("Jaiswal");
 
         User member1 = new User();
         member1.setId(2L);
