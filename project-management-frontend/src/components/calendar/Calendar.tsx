@@ -7,7 +7,7 @@ import Modal from '../common/Modal';
 import LoadingSpinner from '../common/LoadingSpinner';
 import { useToast } from '../../hooks/useToast';
 import { format, startOfMonth, endOfMonth, startOfWeek, endOfWeek, addMonths, subMonths, addDays, isSameMonth, isSameDay } from 'date-fns';
-import api from '../../api/api';
+import api from '../../api';
 import { useSearchParams } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 

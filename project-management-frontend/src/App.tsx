@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { AuthProvider } from './context/AuthContext';
 import { ToastProvider } from './context/ToastContext';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import Layout from './components/layout/Layout';
@@ -34,37 +33,34 @@ const queryClient = new QueryClient({
 const App: React.FC = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <ToastProvider>
-          <Router>
-            <Routes>
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/forgot-password" element={<ForgotPassword />} />
-              <Route path="/reset-password" element={<ResetPassword />} />
-              <Route path="/oauth2/redirect" element={<OAuth2Redirect />} />
-              <Route element={<ProtectedRoute />}>
-                <Route path="/" element={<Layout />}>
-                  <Route index element={<Navigate to="/dashboard" replace />} />
-                  <Route path="dashboard" element={<Dashboard />} />
-                  <Route path="projects" element={<ProjectList />} />
-                  <Route path="projects/:id" element={<ProjectDetails />} />
-                  <Route path="projects/:id/edit" element={<EditProject />} />
-                  <Route path="tasks" element={<TaskList />} />
-                  <Route path="tasks/:id" element={<TaskDetails />} />
-                  <Route path="profile" element={<Profile />} />
-                  <Route path="calendar" element={<Calendar />} />
-                  <Route path="reports" element={<Reports />} />
-                  <Route path="settings" element={<Settings />} />
-                  <Route path="settings" element={<div>Settings</div>} />
-                  <Route path="team" element={<Team />} />
-                </Route>
+      <ToastProvider>
+        <Router>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/oauth2/redirect" element={<OAuth2Redirect />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<Navigate to="/dashboard" replace />} />
+                <Route path="dashboard" element={<Dashboard />} />
+                <Route path="projects" element={<ProjectList />} />
+                <Route path="projects/:id" element={<ProjectDetails />} />
+                <Route path="projects/:id/edit" element={<EditProject />} />
+                <Route path="tasks" element={<TaskList />} />
+                <Route path="tasks/:id" element={<TaskDetails />} />
+                <Route path="profile" element={<Profile />} />
+                <Route path="calendar" element={<Calendar />} />
+                <Route path="reports" element={<Reports />} />
+                <Route path="settings" element={<Settings />} />
+                <Route path="team" element={<Team />} />
               </Route>
-              <Route path="*" element={<Navigate to="/login" replace />} />
-            </Routes>
-          </Router>
-        </ToastProvider>
-      </AuthProvider>
+            </Route>
+            <Route path="*" element={<Navigate to="/login" replace />} />
+          </Routes>
+        </Router>
+      </ToastProvider>
     </QueryClientProvider>
   );
 };

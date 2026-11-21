@@ -18,6 +18,7 @@ export interface UserUpdateRequest {
   firstName?: string;
   lastName?: string;
   email?: string;
+  username?: string;
 }
 
 export interface PasswordChangeRequest {
