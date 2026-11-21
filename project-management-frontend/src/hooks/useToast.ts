@@ -1,3 +1,1 @@
-import { useToast } from '../context/ToastContext';
-
-export { useToast };
+export { useToast } from '../context/ToastContext';

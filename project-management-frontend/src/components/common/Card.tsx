@@ -23,9 +23,9 @@ const Card: React.FC<CardProps> = ({
   return (
     <div
       className={cn(
-        'bg-white dark:bg-gray-800 rounded-xl shadow-card border border-slate-200 dark:border-gray-700',
+        'bg-white dark:bg-gray-800 rounded-lg shadow border border-gray-200 dark:border-gray-700',
         paddings[padding],
-        hover && 'transition-all duration-200 hover:shadow-card-hover hover:-translate-y-0.5 cursor-pointer',
+        hover && 'transition-all duration-200 hover:shadow-lg hover:-translate-y-1',
         className
       )}
       {...props}
@@ -55,12 +55,12 @@ export const CardHeader: React.FC<CardHeaderProps> = ({
         <div className="flex items-center justify-between mb-2">
           <div>
             {title && (
-              <h3 className="text-base font-semibold text-slate-900 dark:text-white tracking-tight">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                 {title}
               </h3>
             )}
             {subtitle && (
-              <p className="text-sm text-slate-500 dark:text-gray-400 mt-0.5">
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
                 {subtitle}
               </p>
             )}
@@ -81,7 +81,7 @@ export const CardContent: React.FC<CardContentProps> = ({
   ...props
 }) => {
   return (
-    <div className={cn('text-slate-600 dark:text-gray-300', className)} {...props}>
+    <div className={cn('text-gray-600 dark:text-gray-300', className)} {...props}>
       {children}
     </div>
   );
@@ -97,7 +97,7 @@ export const CardFooter: React.FC<CardFooterProps> = ({
   return (
     <div
       className={cn(
-        'mt-4 pt-4 border-t border-slate-200 dark:border-gray-700',
+        'mt-4 pt-4 border-t border-gray-200 dark:border-gray-700',
         className
       )}
       {...props}

@@ -1,15 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from './Header';
 import Sidebar from './Sidebar';
-import AIAssistant from '../ai/AIAssistant';
+// import AIAssistant from '../ai/AIAssistant';
 
 const Layout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  useEffect(() => {
-    console.log('Layout mounted, AI Assistant should be visible');
-  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -25,7 +21,7 @@ const Layout: React.FC = () => {
           </div>
         </main>
       </div>
-      <AIAssistant />
+      {/* <AIAssistant /> */}
     </div>
   );
 };

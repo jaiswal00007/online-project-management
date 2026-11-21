@@ -4,11 +4,11 @@ import {
   MessageCircle, FolderKanban, CheckCircle2, RefreshCw, FileText,
 } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
-import { useChat } from '../../hooks/useChat';
-import { chatApi } from '../../api/chat';
+// import { useChat } from '../../hooks/useChat';
+// import { chatApi } from '../../api/chat';
 import { notificationApi } from '../../api/notifications';
 import { usersApi } from '../../api/users';
-import ChatModal from '../team/ChatModal';
+// import ChatModal from '../team/ChatModal';
 import api from '../../api';
 import { cn } from '../../utils/helpers';
 
@@ -48,60 +48,31 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
   const [isSearching, setIsSearching] = useState(false);
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
-  const [selectedChatMember, setSelectedChatMember] = useState<{ 
-    id: number; 
-    name: string; 
-    avatar?: string | null 
-  } | null>(null);
-  const [chatModalOpen, setChatModalOpen] = useState(false);
+  // const [selectedChatMember, setSelectedChatMember] = useState<{ id: number; name: string; avatar?: string | null } | null>(null);
+  // const [chatModalOpen, setChatModalOpen] = useState(false);
   const [userProfiles, setUserProfiles] = useState<Record<number, { avatar?: string }>>({});
-  
-  const { connect, disconnect } = useChat({
-    onMessageReceived: (message) => {
-      console.log('Chat message received:', message);
-      if (message.type === 'CHAT') {
-        addNotification({
-          id: Date.now(),
-          type: 'MESSAGE',
-          content: `New message from ${message.senderName}`,
-          senderId: message.senderId,
-          senderName: message.senderName,
-          timestamp: message.timestamp,
-          read: false
-        });
-      }
-    },
-    onNotification: (notification) => {
-      console.log('WebSocket notification received:', notification);
-      if (notification.timestamp || notification.createdAt) {
-        const notifTime = new Date(notification.timestamp || notification.createdAt).getTime();
-        const now = new Date().getTime();
-        const timeDiff = now - notifTime;
-        if (timeDiff > 10000) {
-          console.log('Ignoring old notification (age:', Math.round(timeDiff/1000), 'seconds)');
-          return;
-        }
-      }
-      
-      if (notification.type && notification.content) {
-        if (notification.type === 'UNREAD_COUNT_UPDATE') {
-          setUnreadCount(notification.unreadCount || 0);
-        } else {
-          addNotification({
-            id: notification.id || Date.now(),
-            type: notification.type,
-            content: notification.content,
-            senderId: notification.senderId,
-            senderName: notification.senderName,
-            entityId: notification.entityId,
-            entityType: notification.entityType,
-            timestamp: notification.timestamp || notification.createdAt || new Date().toISOString(),
-            read: notification.read || false
-          });
-        }
-      }
-    }
-  });
+
+  // const { connect, disconnect } = useChat({
+  //   onMessageReceived: (message) => {
+  //     if (message.type === 'CHAT') {
+  //       addNotification({ id: Date.now(), type: 'MESSAGE', content: `New message from ${message.senderName}`, senderId: message.senderId, senderName: message.senderName, timestamp: message.timestamp, read: false });
+  //     }
+  //   },
+  //   onNotification: (notification) => {
+  //     if (notification.timestamp || notification.createdAt) {
+  //       const notifTime = new Date(notification.timestamp || notification.createdAt).getTime();
+  //       const now = new Date().getTime();
+  //       if (now - notifTime > 10000) return;
+  //     }
+  //     if (notification.type && notification.content) {
+  //       if (notification.type === 'UNREAD_COUNT_UPDATE') {
+  //         setUnreadCount(notification.unreadCount || 0);
+  //       } else {
+  //         addNotification({ id: notification.id || Date.now(), type: notification.type, content: notification.content, senderId: notification.senderId, senderName: notification.senderName, entityId: notification.entityId, entityType: notification.entityType, timestamp: notification.timestamp || notification.createdAt || new Date().toISOString(), read: notification.read || false });
+  //       }
+  //     }
+  //   }
+  // });
 
   const addNotification = (notification: Notification) => {
     setNotifications(prev => {
@@ -122,13 +93,12 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
 
   useEffect(() => {
     if (user) {
-      connect();
+      // connect();
       loadAllNotifications();
       loadAllUsers();
     }
-    
     return () => {
-      disconnect();
+      // disconnect();
     };
   }, [user]);
 
@@ -155,7 +125,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
 
   const loadAllNotifications = async () => {
     await fetchDatabaseNotifications();
-    await fetchChatNotifications();
+    // await fetchChatNotifications();
     await fetchUnreadCount();
   };
 
@@ -230,12 +200,11 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
 
   const fetchUnreadCount = async () => {
     if (!user) return;
-    
     try {
       const dbCount = await notificationApi.getUnreadCount();
-      const chatCount = await chatApi.getUnreadCount(user.id);
-      const totalUnread = (dbCount.data || 0) + (chatCount.data || 0);
-      setUnreadCount(totalUnread);
+      // const chatCount = await chatApi.getUnreadCount(user.id);
+      // const totalUnread = (dbCount.data || 0) + (chatCount.data || 0);
+      setUnreadCount(dbCount.data || 0);
     } catch (error) {
       console.error('Error fetching unread count:', error);
       const localUnread = notifications.filter(n => !n.read).length;
@@ -243,47 +212,28 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
     }
   };
 
-  const fetchChatNotifications = async () => {
-    if (!user) return;
-    
-    try {
-      const response = await chatApi.getUnreadMessages(user.id);
-      const chatNotifications = response.data.map((msg: any) => ({
-        id: msg.id || Date.now(),
-        type: 'MESSAGE',
-        content: `New message from ${msg.senderName}`,
-        senderId: msg.senderId,
-        senderName: msg.senderName,
-        timestamp: msg.timestamp,
-        read: msg.read
-      }));
-      
-      setNotifications(prev => {
-        const newNotifs = [...chatNotifications];
-        prev.forEach(n => {
-          if (!newNotifs.some(cn => cn.id === n.id)) {
-            newNotifs.push(n);
-          }
-        });
-        return newNotifs;
-      });
-    } catch (error) {
-      console.error('Error fetching chat notifications:', error);
-    }
-  };
+  // const fetchChatNotifications = async () => {
+  //   if (!user) return;
+  //   try {
+  //     const response = await chatApi.getUnreadMessages(user.id);
+  //     const chatNotifications = response.data.map((msg: any) => ({
+  //       id: msg.id || Date.now(), type: 'MESSAGE', content: `New message from ${msg.senderName}`,
+  //       senderId: msg.senderId, senderName: msg.senderName, timestamp: msg.timestamp, read: msg.read
+  //     }));
+  //     setNotifications(prev => { const newNotifs = [...chatNotifications]; prev.forEach(n => { if (!newNotifs.some(cn => cn.id === n.id)) newNotifs.push(n); }); return newNotifs; });
+  //   } catch (error) { console.error('Error fetching chat notifications:', error); }
+  // };
 
   const markNotificationAsRead = async (notification: Notification) => {
     try {
-      if (notification.type.includes('PROJECT') || 
-          notification.type.includes('TASK') || 
+      if (notification.type.includes('PROJECT') ||
+          notification.type.includes('TASK') ||
           notification.type.includes('CALENDAR_EVENT')) {
         await notificationApi.markAsRead(notification.id);
-      } else if (notification.type === 'MESSAGE' && notification.senderId && user) {
-        await chatApi.markAsRead(user.id, notification.senderId);
       }
-      
-      setNotifications(prev => 
-        prev.map(notif => 
+      // Chat message read marking removed
+      setNotifications(prev =>
+        prev.map(notif =>
           notif.id === notification.id ? { ...notif, read: true } : notif
         )
       );
@@ -297,39 +247,23 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
     if (!notification.read) {
       markNotificationAsRead(notification);
     }
-    
-    if (notification.type === 'MESSAGE' && notification.senderId && notification.senderName) {
-      const senderAvatar = userProfiles[notification.senderId]?.avatar;
-      
-      setSelectedChatMember({
-        id: notification.senderId,
-        name: notification.senderName,
-        avatar: senderAvatar
-      });
-      setChatModalOpen(true);
-    } else if (notification.type.includes('TASK') && notification.entityId) {
+
+    // Chat message click (open ChatModal) removed
+    if (notification.type.includes('TASK') && notification.entityId) {
       window.location.href = `/tasks/${notification.entityId}`;
     } else if (notification.type.includes('PROJECT') && notification.entityId) {
       window.location.href = `/projects/${notification.entityId}`;
     } else if (notification.type.includes('CALENDAR_EVENT') && notification.entityId) {
       window.location.href = `/calendar?eventId=${notification.entityId}`;
     }
-    
+
     setShowNotifications(false);
   };
 
   const markAllAsRead = async () => {
     try {
       await notificationApi.markAllAsRead();
-      if (user) {
-        const unreadMessages = notifications.filter(n => n.type === 'MESSAGE' && !n.read && n.senderId);
-        for (const msg of unreadMessages) {
-          if (msg.senderId) {
-            await chatApi.markAsRead(user.id, msg.senderId);
-          }
-        }
-      }
-      
+      // Chat message marking removed
       setNotifications(prev => prev.map(notif => ({ ...notif, read: true })));
       setUnreadCount(0);
     } catch (error) {
@@ -687,19 +621,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
         </div>
       </header>
 
-      {selectedChatMember && (
-        <ChatModal
-          receiverId={selectedChatMember.id}
-          receiverName={selectedChatMember.name}
-          receiverAvatar={selectedChatMember.avatar}
-          isOpen={chatModalOpen}
-          onClose={() => {
-            setChatModalOpen(false);
-            setSelectedChatMember(null);
-            loadAllNotifications();
-          }}
-        />
-      )}
+      {/* ChatModal removed */}
     </>
   );
 };

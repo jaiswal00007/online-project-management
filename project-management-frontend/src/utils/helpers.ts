@@ -11,7 +11,6 @@ export function formatDate(date: string | Date, options?: Intl.DateTimeFormatOpt
     month: 'short',
     day: 'numeric',
   };
-  
   return new Date(date).toLocaleDateString('en-US', options || defaultOptions);
 }
 
@@ -35,7 +34,6 @@ export function generateColorFromString(str: string) {
   for (let i = 0; i < str.length; i++) {
     hash = str.charCodeAt(i) + ((hash << 5) - hash);
   }
-  
   const hue = hash % 360;
   return `hsl(${hue}, 70%, 60%)`;
 }
@@ -54,7 +52,6 @@ export function debounce<T extends (...args: any[]) => any>(
   wait: number
 ): (...args: Parameters<T>) => void {
   let timeout: ReturnType<typeof setTimeout>;
-  
   return (...args: Parameters<T>) => {
     clearTimeout(timeout);
     timeout = setTimeout(() => func(...args), wait);

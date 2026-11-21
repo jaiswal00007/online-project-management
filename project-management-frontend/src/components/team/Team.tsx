@@ -10,7 +10,7 @@ import Modal from '../common/Modal';
 import LoadingSpinner from '../common/LoadingSpinner';
 import Card from '../common/Card';
 import { useAuth } from '../../hooks/useAuth';
-import ChatModal from './ChatModal';
+// import ChatModal from './ChatModal';
 import TeamPhoto from './TeamPhoto';
 
 interface TeamMember {
@@ -62,8 +62,8 @@ const Team: React.FC = () => {
   const [inviteRole, setInviteRole] = useState('ROLE_USER');
   const { error, success } = useToast();
   const { user: currentUser } = useAuth();
-  const [chatModalOpen, setChatModalOpen] = useState(false);
-  const [selectedChatMember, setSelectedChatMember] = useState<TeamMember | null>(null);
+  // const [chatModalOpen, setChatModalOpen] = useState(false);
+  // const [selectedChatMember, setSelectedChatMember] = useState<TeamMember | null>(null);
   
   const [isCreateTeamModalOpen, setIsCreateTeamModalOpen] = useState(false);
   const [newTeamName, setNewTeamName] = useState('');
@@ -809,12 +809,12 @@ const Team: React.FC = () => {
 
                     <div className="mt-6 flex space-x-3">
                       <Button 
-                        variant="secondary" 
-                        size="sm" 
+                        variant="secondary"
+                        size="sm"
                         className="flex-1"
                         onClick={() => {
-                          setSelectedChatMember(member);
-                          setChatModalOpen(true);
+                          // setSelectedChatMember(member);
+                          // setChatModalOpen(true);
                         }}
                       >
                         Message
@@ -1613,12 +1613,12 @@ const Team: React.FC = () => {
 
             <div className="pt-6 border-t border-gray-200 dark:border-gray-700">
               <div className="flex space-x-3">
-                <Button 
-                  variant="secondary" 
+                <Button
+                  variant="secondary"
                   className="flex-1"
                   onClick={() => {
-                    setSelectedChatMember(selectedMember);
-                    setChatModalOpen(true);
+                    // setSelectedChatMember(selectedMember);
+                    // setChatModalOpen(true);
                     handleCloseProfileModal();
                   }}
                 >
@@ -1768,18 +1768,7 @@ const Team: React.FC = () => {
         )}
       </Modal>
 
-      {selectedChatMember && (
-        <ChatModal
-          receiverId={selectedChatMember.id}
-          receiverName={`${selectedChatMember.firstName} ${selectedChatMember.lastName}`}
-          receiverAvatar={getProfilePictureUrl(selectedChatMember)}
-          isOpen={chatModalOpen}
-          onClose={() => {
-            setChatModalOpen(false);
-            setSelectedChatMember(null);
-          }}
-        />
-      )}
+      {/* ChatModal removed */}
     </div>
   );
 };
