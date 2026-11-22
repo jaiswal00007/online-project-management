@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { Lock, Eye, EyeOff, CheckCircle, XCircle } from 'lucide-react';
-import api from '../../api/api';
+import api from '../../api';
 import Button from '../common/Button';
 import Input from '../common/Input';
 import Card from '../common/Card';

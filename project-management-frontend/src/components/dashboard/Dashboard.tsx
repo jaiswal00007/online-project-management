@@ -180,7 +180,7 @@ const Dashboard: React.FC = () => {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
-            Good morning 👋
+            {(() => { const h = new Date().getHours(); return h < 12 ? 'Good morning 👋' : h < 17 ? 'Good afternoon 👋' : h < 21 ? 'Good evening 👋' : 'Good night 👋'; })()}
           </h1>
           <p className="text-slate-500 dark:text-gray-400 mt-1 text-sm">
             Here's an overview of your projects and tasks.

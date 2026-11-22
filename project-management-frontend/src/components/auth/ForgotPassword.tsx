@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Mail, ArrowLeft, CheckCircle } from 'lucide-react';
-import api from '../../api/api';
+import api from '../../api';
 import Button from '../common/Button';
 import Input from '../common/Input';
 import Card from '../common/Card';

@@ -1,5 +1,7 @@
 package com.example.project_management_app.security;
 
+import com.example.project_management_app.entity.User;
+import com.example.project_management_app.service.AccountService;
 import com.example.project_management_app.util.JwtUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,15 +20,23 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     @Autowired
     private JwtUtil jwtUtil;
 
+    @Autowired
+    private AccountService accountService;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
                                         HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
-        if (authentication instanceof OAuth2AuthenticationToken token) {
-            String email = token.getPrincipal().getAttribute("email");
+        if (authentication instanceof OAuth2AuthenticationToken oauthToken) {
+            String email = oauthToken.getPrincipal().getAttribute("email");
+            String name = oauthToken.getPrincipal().getAttribute("name");
+            String provider = oauthToken.getAuthorizedClientRegistrationId();
+
             if (email != null) {
-                String jwt = jwtUtil.generateToken(email);
-                response.sendRedirect("/oauth2/redirect?token=" + jwt);
+                // Find or create the user, then generate JWT with their USERNAME (not email)
+                User user = accountService.processOAuthLogin(email, name != null ? name : email, provider);
+                String jwt = jwtUtil.generateToken(user.getUsername());
+                response.sendRedirect("http://localhost:3000/oauth2/redirect?token=" + jwt + "&username=" + user.getUsername());
                 return;
             }
         }

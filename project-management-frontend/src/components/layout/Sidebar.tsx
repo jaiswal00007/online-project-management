@@ -18,11 +18,6 @@ import { useToast } from '../../hooks/useToast';
 import Button from '../common/Button';
 import Modal from '../common/Modal';
 import ProjectForm from '../projects/ProjectForm';
-import io from 'socket.io-client';
-
-const socket = io('http://localhost:8080', {
-  withCredentials: true
-});
 
 interface SidebarProps {
   isOpen?: boolean;
@@ -65,14 +60,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen = true, onClose }) => {
 
   useEffect(() => {
     fetchTeamMembers();
-
-    socket.on('user_status_change', handleUserStatusChange);
-    socket.on('user_last_activity', handleUserLastActivity);
-
-    return () => {
-      socket.off('user_status_change', handleUserStatusChange);
-      socket.off('user_last_activity', handleUserLastActivity);
-    };
+    const interval = setInterval(fetchTeamMembers, 30000);
+    return () => clearInterval(interval);
   }, []);
 
   const fetchTeamMembers = async () => {
@@ -102,32 +91,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen = true, onClose }) => {
     const diffInMinutes = Math.floor((now.getTime() - lastActive.getTime()) / (1000 * 60));
     
     return diffInMinutes < 5;
-  };
-
-  const handleUserStatusChange = (data: { userId: number; isOnline: boolean; lastActivity: string }) => {
-    setTeamMembers(prev => prev.map(member => {
-      if (member.id === data.userId) {
-        return {
-          ...member,
-          isOnline: data.isOnline,
-          lastActivity: data.lastActivity
-        };
-      }
-      return member;
-    }));
-  };
-
-  const handleUserLastActivity = (data: { userId: number; lastActivity: string }) => {
-    setTeamMembers(prev => prev.map(member => {
-      if (member.id === data.userId) {
-        return {
-          ...member,
-          lastActivity: data.lastActivity,
-          isOnline: calculateOnlineStatus(data.lastActivity)
-        };
-      }
-      return member;
-    }));
   };
 
   const getInitials = (firstName: string = '', lastName: string = '') => {

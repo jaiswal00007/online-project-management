@@ -10,7 +10,6 @@ import Modal from '../common/Modal';
 import LoadingSpinner from '../common/LoadingSpinner';
 import Card from '../common/Card';
 import { useAuth } from '../../hooks/useAuth';
-// import ChatModal from './ChatModal';
 import TeamPhoto from './TeamPhoto';
 
 interface TeamMember {
@@ -62,7 +61,6 @@ const Team: React.FC = () => {
   const [inviteRole, setInviteRole] = useState('ROLE_USER');
   const { error, success } = useToast();
   const { user: currentUser } = useAuth();
-  // const [chatModalOpen, setChatModalOpen] = useState(false);
   // const [selectedChatMember, setSelectedChatMember] = useState<TeamMember | null>(null);
   
   const [isCreateTeamModalOpen, setIsCreateTeamModalOpen] = useState(false);
@@ -814,7 +812,6 @@ const Team: React.FC = () => {
                         className="flex-1"
                         onClick={() => {
                           // setSelectedChatMember(member);
-                          // setChatModalOpen(true);
                         }}
                       >
                         Message
@@ -1618,7 +1615,6 @@ const Team: React.FC = () => {
                   className="flex-1"
                   onClick={() => {
                     // setSelectedChatMember(selectedMember);
-                    // setChatModalOpen(true);
                     handleCloseProfileModal();
                   }}
                 >
@@ -1768,7 +1764,6 @@ const Team: React.FC = () => {
         )}
       </Modal>
 
-      {/* ChatModal removed */}
     </div>
   );
 };

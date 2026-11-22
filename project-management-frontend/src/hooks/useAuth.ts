@@ -108,9 +108,10 @@ export const useAuth = () => {
 
   const logout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     localStorage.removeItem('username');
     localStorage.removeItem('email');
-    setUser(null); 
+    setUser(null);
     navigate('/login');
   };
 
@@ -138,10 +139,9 @@ export const useAuth = () => {
         
         // If username changed, log out and require re-login
         if (updatedData.username && updatedData.username !== previousUser?.username) {
-          // Show message to user
           alert('Username changed! Please log in again with your new username.');
-          // Clear token and log out
           localStorage.removeItem('token');
+          localStorage.removeItem('user');
           localStorage.removeItem('username');
           localStorage.removeItem('email');
           setUser(null);

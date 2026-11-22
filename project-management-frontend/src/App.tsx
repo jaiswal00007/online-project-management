@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ToastProvider } from './context/ToastContext';
+import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import Layout from './components/layout/Layout';
 import Login from './components/auth/Login';
@@ -33,6 +34,7 @@ const queryClient = new QueryClient({
 const App: React.FC = () => {
   return (
     <QueryClientProvider client={queryClient}>
+      <AuthProvider>
       <ToastProvider>
         <Router>
           <Routes>
@@ -61,6 +63,7 @@ const App: React.FC = () => {
           </Routes>
         </Router>
       </ToastProvider>
+      </AuthProvider>
     </QueryClientProvider>
   );
 };

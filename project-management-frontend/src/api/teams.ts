@@ -1,4 +1,4 @@
-import api from './api';
+import api from '.';
 
 export const teamsApi = {
   createTeam: (data: { name: string; description: string }) => 

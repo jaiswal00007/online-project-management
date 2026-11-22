@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Menu, Bell, Search, Sun, Moon, User, CheckCheck, Trash2, X,
-  MessageCircle, FolderKanban, CheckCircle2, RefreshCw, FileText,
+  FolderKanban, CheckCircle2, RefreshCw, FileText,
 } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
-// import { useChat } from '../../hooks/useChat';
-// import { chatApi } from '../../api/chat';
 import { notificationApi } from '../../api/notifications';
 import { usersApi } from '../../api/users';
-// import ChatModal from '../team/ChatModal';
 import api from '../../api';
 import { cn } from '../../utils/helpers';
+import SockJS from 'sockjs-client';
+import { Client } from '@stomp/stompjs';
 
 interface HeaderProps {
   onMenuClick?: () => void;
@@ -48,57 +47,64 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
   const [isSearching, setIsSearching] = useState(false);
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
-  // const [selectedChatMember, setSelectedChatMember] = useState<{ id: number; name: string; avatar?: string | null } | null>(null);
-  // const [chatModalOpen, setChatModalOpen] = useState(false);
   const [userProfiles, setUserProfiles] = useState<Record<number, { avatar?: string }>>({});
-
-  // const { connect, disconnect } = useChat({
-  //   onMessageReceived: (message) => {
-  //     if (message.type === 'CHAT') {
-  //       addNotification({ id: Date.now(), type: 'MESSAGE', content: `New message from ${message.senderName}`, senderId: message.senderId, senderName: message.senderName, timestamp: message.timestamp, read: false });
-  //     }
-  //   },
-  //   onNotification: (notification) => {
-  //     if (notification.timestamp || notification.createdAt) {
-  //       const notifTime = new Date(notification.timestamp || notification.createdAt).getTime();
-  //       const now = new Date().getTime();
-  //       if (now - notifTime > 10000) return;
-  //     }
-  //     if (notification.type && notification.content) {
-  //       if (notification.type === 'UNREAD_COUNT_UPDATE') {
-  //         setUnreadCount(notification.unreadCount || 0);
-  //       } else {
-  //         addNotification({ id: notification.id || Date.now(), type: notification.type, content: notification.content, senderId: notification.senderId, senderName: notification.senderName, entityId: notification.entityId, entityType: notification.entityType, timestamp: notification.timestamp || notification.createdAt || new Date().toISOString(), read: notification.read || false });
-  //       }
-  //     }
-  //   }
-  // });
+  const stompClientRef = useRef<Client | null>(null);
 
   const addNotification = (notification: Notification) => {
     setNotifications(prev => {
-      const exists = prev.some(n => 
-        n.id === notification.id || 
-        (n.type === notification.type && 
-         n.senderId === notification.senderId && 
+      const exists = prev.some(n =>
+        n.id === notification.id ||
+        (n.type === notification.type &&
+         n.senderId === notification.senderId &&
          n.content === notification.content &&
          Math.abs(new Date(n.timestamp).getTime() - new Date(notification.timestamp).getTime()) < 5000)
       );
       return exists ? prev : [notification, ...prev];
     });
-    
     if (!notification.read) {
       setUnreadCount(prev => prev + 1);
     }
   };
 
   useEffect(() => {
-    if (user) {
-      // connect();
-      loadAllNotifications();
-      loadAllUsers();
-    }
+    if (!user) return;
+    loadAllNotifications();
+    loadAllUsers();
+
+    const token = localStorage.getItem('token');
+    const client = new Client({
+      webSocketFactory: () => new SockJS('http://localhost:8080/ws'),
+      connectHeaders: { Authorization: `Bearer ${token}` },
+      reconnectDelay: 5000,
+      onConnect: () => {
+        client.subscribe(`/user/${user.id}/queue/notifications`, (msg) => {
+          const notification = JSON.parse(msg.body);
+          if (notification.type === 'UNREAD_COUNT_UPDATE') {
+            setUnreadCount(notification.unreadCount || 0);
+          } else if (notification.type && notification.content) {
+            const notifTime = new Date(notification.timestamp || notification.createdAt).getTime();
+            if (Date.now() - notifTime < 10000) {
+              addNotification({
+                id: notification.id || Date.now(),
+                type: notification.type,
+                content: notification.content,
+                senderId: notification.senderId,
+                senderName: notification.senderName,
+                entityId: notification.entityId,
+                entityType: notification.entityType,
+                timestamp: notification.timestamp || notification.createdAt || new Date().toISOString(),
+                read: notification.read || false,
+              });
+            }
+          }
+        });
+      },
+    });
+    client.activate();
+    stompClientRef.current = client;
+
     return () => {
-      // disconnect();
+      client.deactivate();
     };
   }, [user]);
 
@@ -202,8 +208,6 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
     if (!user) return;
     try {
       const dbCount = await notificationApi.getUnreadCount();
-      // const chatCount = await chatApi.getUnreadCount(user.id);
-      // const totalUnread = (dbCount.data || 0) + (chatCount.data || 0);
       setUnreadCount(dbCount.data || 0);
     } catch (error) {
       console.error('Error fetching unread count:', error);
@@ -212,17 +216,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
     }
   };
 
-  // const fetchChatNotifications = async () => {
-  //   if (!user) return;
-  //   try {
-  //     const response = await chatApi.getUnreadMessages(user.id);
-  //     const chatNotifications = response.data.map((msg: any) => ({
-  //       id: msg.id || Date.now(), type: 'MESSAGE', content: `New message from ${msg.senderName}`,
-  //       senderId: msg.senderId, senderName: msg.senderName, timestamp: msg.timestamp, read: msg.read
-  //     }));
-  //     setNotifications(prev => { const newNotifs = [...chatNotifications]; prev.forEach(n => { if (!newNotifs.some(cn => cn.id === n.id)) newNotifs.push(n); }); return newNotifs; });
-  //   } catch (error) { console.error('Error fetching chat notifications:', error); }
-  // };
+  // const fetchChatNotifications removed
 
   const markNotificationAsRead = async (notification: Notification) => {
     try {
@@ -231,7 +225,6 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
           notification.type.includes('CALENDAR_EVENT')) {
         await notificationApi.markAsRead(notification.id);
       }
-      // Chat message read marking removed
       setNotifications(prev =>
         prev.map(notif =>
           notif.id === notification.id ? { ...notif, read: true } : notif
@@ -248,7 +241,6 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
       markNotificationAsRead(notification);
     }
 
-    // Chat message click (open ChatModal) removed
     if (notification.type.includes('TASK') && notification.entityId) {
       window.location.href = `/tasks/${notification.entityId}`;
     } else if (notification.type.includes('PROJECT') && notification.entityId) {
@@ -283,7 +275,6 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
 
   const getNotificationIcon = (type: string) => {
     const cls = 'h-4 w-4 flex-shrink-0';
-    if (type === 'MESSAGE') return <MessageCircle className={cn(cls, 'text-blue-500')} />;
     if (type.includes('PROJECT')) return <FolderKanban className={cn(cls, 'text-primary-500')} />;
     if (type === 'TASK_COMPLETED') return <CheckCircle2 className={cn(cls, 'text-green-500')} />;
     if (type === 'TASK_REASSIGNED') return <RefreshCw className={cn(cls, 'text-amber-500')} />;
@@ -620,8 +611,6 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
           </div>
         </div>
       </header>
-
-      {/* ChatModal removed */}
     </>
   );
 };
