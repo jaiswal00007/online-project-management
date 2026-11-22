@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { LogIn, Mail, Lock, Eye, EyeOff } from 'lucide-react';
+import { LogIn, Mail, Lock, Eye, EyeOff, Github, Chrome } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../hooks/useToast';
@@ -18,10 +18,21 @@ const loginSchema = z.object({
 type LoginFormData = z.infer<typeof loginSchema>;
 
 const Login: React.FC = () => {
-  const { login } = useAuth();
+  const { login, oauthLogin } = useAuth();
   const { success, error } = useToast();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [oauthLoading, setOauthLoading] = useState<string | null>(null);
+
+  const handleOAuthLogin = async (provider: string) => {
+    try {
+      setOauthLoading(provider);
+      await oauthLogin(provider);
+    } catch (err) {
+      error(`Failed to initiate ${provider} login`);
+      setOauthLoading(null);
+    }
+  };
   
   const {
     register,
@@ -113,6 +124,30 @@ const Login: React.FC = () => {
             </CardFooter>
           </form>
         </Card>
+
+        <div className="text-center">
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            Or sign in with
+          </p>
+          <div className="mt-3 flex gap-3 justify-center">
+            <button
+              onClick={() => handleOAuthLogin('google')}
+              disabled={oauthLoading !== null}
+              className="flex items-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-50"
+            >
+              <Chrome className="h-4 w-4 text-red-500" />
+              {oauthLoading === 'google' ? 'Redirecting...' : 'Google'}
+            </button>
+            <button
+              onClick={() => handleOAuthLogin('github')}
+              disabled={oauthLoading !== null}
+              className="flex items-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-50"
+            >
+              <Github className="h-4 w-4" />
+              {oauthLoading === 'github' ? 'Redirecting...' : 'GitHub'}
+            </button>
+          </div>
+        </div>
 
         <div className="text-center">
           <p className="text-sm text-gray-600 dark:text-gray-400">

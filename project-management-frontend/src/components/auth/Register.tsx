@@ -28,7 +28,7 @@ const registerSchema = z.object({
 type RegisterFormData = z.infer<typeof registerSchema>;
 
 const Register: React.FC = () => {
-  const { register: registerUser, oauthLogin, handleOAuthRedirect } = useAuth();
+  const { register: registerUser, oauthLogin } = useAuth();
   const { success, error } = useToast();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -73,17 +73,7 @@ const Register: React.FC = () => {
     return 'Strong';
   };
 
-  useEffect(() => {
-    const checkOAuthRedirect = async () => {
-      const isOAuthRedirect = await handleOAuthRedirect();
-      if (isOAuthRedirect) {
-        success('Successfully logged in with OAuth2!');
-        navigate('/dashboard');
-      }
-    };
-    
-    checkOAuthRedirect();
-  }, [handleOAuthRedirect, navigate, success]);
+  useEffect(() => {}, []);
 
   const onSubmit = async (data: RegisterFormData) => {
     try {
