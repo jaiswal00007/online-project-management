@@ -34,4 +34,7 @@ export const usersApi = {
     
   sendInvite: (data: { email: string; role: string }) =>
     api.post('/users/invite', data),
+
+  heartbeat: () =>
+    api.post('/users/me/heartbeat'),
 };

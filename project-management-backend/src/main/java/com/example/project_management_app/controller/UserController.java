@@ -18,6 +18,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -202,5 +203,16 @@ public class UserController {
             errorResponse.put("error", e.getMessage());
             return ResponseEntity.badRequest().body(errorResponse);
         }
+    }
+
+    @PostMapping("/me/heartbeat")
+    public ResponseEntity<Map<String, Object>> heartbeat() {
+        User user = accountService.getCurrentUser();
+        userRepository.updateLastActivity(user.getId(), LocalDateTime.now());
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "ok");
+        response.put("lastActivity", LocalDateTime.now().toString());
+        return ResponseEntity.ok(response);
     }
 }
