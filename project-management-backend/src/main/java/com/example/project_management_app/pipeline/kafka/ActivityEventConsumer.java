@@ -4,6 +4,7 @@ import com.example.project_management_app.pipeline.model.UserActivityEvent;
 import com.example.project_management_app.pipeline.service.RealTimeMetricsService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
 @Component
+@Profile("kafka")
 public class ActivityEventConsumer {
 
     @Autowired

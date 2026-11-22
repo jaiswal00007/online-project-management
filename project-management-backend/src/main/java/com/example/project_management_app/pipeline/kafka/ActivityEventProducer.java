@@ -2,10 +2,12 @@ package com.example.project_management_app.pipeline.kafka;
 
 import com.example.project_management_app.pipeline.model.UserActivityEvent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
+@Profile("kafka")
 public class ActivityEventProducer {
 
     @Autowired
