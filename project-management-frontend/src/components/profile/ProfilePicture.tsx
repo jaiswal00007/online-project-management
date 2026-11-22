@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Upload, Camera, Trash2 } from 'lucide-react';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../../context/AuthContext';
 import { usersApi } from '../../api/users';
 import { useToast } from '../../hooks/useToast';
 import Button from '../common/Button';

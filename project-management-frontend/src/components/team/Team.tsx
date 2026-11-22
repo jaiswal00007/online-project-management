@@ -9,7 +9,7 @@ import Input from '../common/Input';
 import Modal from '../common/Modal';
 import LoadingSpinner from '../common/LoadingSpinner';
 import Card from '../common/Card';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../../context/AuthContext';
 import TeamPhoto from './TeamPhoto';
 
 interface TeamMember {

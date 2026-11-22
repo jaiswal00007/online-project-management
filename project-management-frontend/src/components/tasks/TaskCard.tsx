@@ -3,7 +3,7 @@ import { Calendar, User, AlertCircle, MoreVertical, CheckCircle, Clock, Trash2 }
 import type { Task } from '../../types/task';
 import { useTasks } from '../../hooks/useTasks';
 import { useToast } from '../../hooks/useToast';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../../context/AuthContext';
 import Card from '../common/Card';
 import Modal from '../common/Modal';
 import Button from '../common/Button';

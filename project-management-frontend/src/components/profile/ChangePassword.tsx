@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Lock, Eye, EyeOff, Save, Key, X } from 'lucide-react';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../hooks/useToast';
 import { usersApi } from '../../api/users';
 import Input from '../common/Input';

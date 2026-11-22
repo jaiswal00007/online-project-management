@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Mail, Calendar, Shield } from 'lucide-react';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../../context/AuthContext';
 import Card, { CardHeader, CardContent } from '../common/Card';
 import ProfilePicture from './ProfilePicture';
 import ProfileForm from './ProfileForm';

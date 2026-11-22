@@ -1,16 +1,21 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import { authApi } from '../api/auth';
+import { oauthApi } from '../api/oauth';
 import type { AuthUser } from '../types/auth';
 
 interface AuthContextType {
   user: AuthUser | null;
   token: string | null;
   isLoading: boolean;
+  initialLoad: boolean;
   login: (username: string, password: string) => Promise<void>;
   register: (data: any) => Promise<void>;
   logout: () => void;
   updateUser: (user: AuthUser) => void;
+  refreshUser: () => Promise<void>;
+  getToken: () => string | null;
+  oauthLogin: (provider: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -30,7 +35,8 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [token, setToken] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [initialLoad, setInitialLoad] = useState(true);
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
@@ -39,9 +45,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     if (storedToken && storedUser) {
       setToken(storedToken);
       setUser(JSON.parse(storedUser));
-      fetchCurrentUser();
+      fetchCurrentUser().finally(() => setInitialLoad(false));
+    } else {
+      setInitialLoad(false);
     }
-    setIsLoading(false);
   }, []);
 
   const fetchCurrentUser = async () => {
@@ -77,6 +84,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setToken(null);
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    localStorage.removeItem('username');
+    localStorage.removeItem('email');
     window.location.href = '/login';
   };
 
@@ -85,16 +94,31 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     localStorage.setItem('user', JSON.stringify(updatedUser));
   };
 
+  const refreshUser = async () => {
+    await fetchCurrentUser();
+  };
+
+  const getToken = () => localStorage.getItem('token');
+
+  const oauthLogin = async (provider: string) => {
+    const response = await oauthApi.getAuthorizationUrl(provider);
+    window.location.href = response.data.url;
+  };
+
   return (
     <AuthContext.Provider
       value={{
         user,
         token,
         isLoading,
+        initialLoad,
         login,
         register,
         logout,
         updateUser,
+        refreshUser,
+        getToken,
+        oauthLogin,
       }}
     >
       {children}

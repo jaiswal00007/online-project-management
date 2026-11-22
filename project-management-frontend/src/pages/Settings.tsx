@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { 
   Bell, Globe, Users, Shield, ChevronRight, Download, Database, Lock
 } from 'lucide-react';
-import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../context/AuthContext';
 import { useToast } from '../hooks/useToast';
 import Card, { CardHeader, CardContent } from '../components/common/Card';
 import Button from '../components/common/Button';

@@ -3,7 +3,7 @@ import {
   Menu, Bell, Search, Sun, Moon, User, CheckCheck, Trash2, X,
   FolderKanban, CheckCircle2, RefreshCw, FileText,
 } from 'lucide-react';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../../context/AuthContext';
 import { notificationApi } from '../../api/notifications';
 import { usersApi } from '../../api/users';
 import api from '../../api';
